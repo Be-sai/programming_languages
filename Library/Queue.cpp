@@ -2,12 +2,19 @@
 #include "Queue.h"
 #include <iostream>
 
+/**
+ * @brief Конструктор по умолчанию.
+ */
 Queue::Queue()
 {
     front = nullptr;
     rear = nullptr;
 }
 
+/**
+ * @brief Конструктор копирования.
+ * @param other Другой объект очереди.
+ */
 Queue::Queue(const Queue& other)
 {
     Node* temp = other.front;
@@ -18,6 +25,10 @@ Queue::Queue(const Queue& other)
     }
 }
 
+/**
+ * @brief Конструктор с использованием списка инициализации.
+ * @param list Список инициализации.
+ */
 Queue::Queue(std::initializer_list<size_t> list) {
     front = nullptr;
     rear = nullptr;
@@ -26,6 +37,9 @@ Queue::Queue(std::initializer_list<size_t> list) {
     }
 }
 
+/**
+ * @brief Деструктор.
+ */
 Queue::~Queue()
 {
     Node* temp = front;
@@ -37,6 +51,10 @@ Queue::~Queue()
     }
 }
 
+/**
+ * @brief Добавление элемента в конец очереди.
+ * @param item Элемент для добавления.
+ */
 void Queue::enqueue(size_t item)
 {
     Node* temp = new Node(item);
@@ -53,6 +71,9 @@ void Queue::enqueue(size_t item)
     }
 }
 
+/**
+ * @brief Удаление элемента из начала очереди.
+ */
 void Queue::dequeue()
 {
     if (front != nullptr)
@@ -63,6 +84,10 @@ void Queue::dequeue()
     }
 }
 
+/**
+ * @brief Получение значения первого элемента очереди.
+ * @return Значение первого элемента очереди.
+ */
 int Queue::peek()
 {
     if (front != nullptr) {
@@ -74,6 +99,10 @@ int Queue::peek()
 
 }
 
+/**
+ * @brief Получение размера очереди.
+ * @return Размер очереди.
+ */
 int Queue::size()
 {
     int i = 0;
@@ -86,11 +115,20 @@ int Queue::size()
 
 }
 
+/**
+ * @brief Проверка, пуста ли очередь.
+ * @return true, если очередь пуста, иначе false.
+ */
 bool Queue::isEmpty() {
 
     return rear == nullptr && front == nullptr;
 }
 
+/**
+ * @brief Оператор присваивания.
+ * @param other Другой объект очереди.
+ * @return Ссылка на текущий объект.
+ */
 const Queue& Queue::operator=(const Queue& other)
 {
     if (this != &other)
@@ -114,6 +152,11 @@ const Queue& Queue::operator=(const Queue& other)
     return *this;
 }
 
+/**
+ * @brief Оператор вывода в поток.
+ * @param os Поток вывода.
+ * @return Ссылка на поток вывода.
+ */
 std::ostream& Queue::operator<<(std::ostream& os) {
     Node* temp = front;
     while (temp != nullptr)
@@ -124,6 +167,11 @@ std::ostream& Queue::operator<<(std::ostream& os) {
     return os;
 }
 
+/**
+ * @brief Оператор ввода из потока.
+ * @param is Поток ввода.
+ * @return Ссылка на поток ввода.
+ */
 std::istream& Queue::operator>>(std::istream& is) {
     size_t value;
     while (is >> value)
