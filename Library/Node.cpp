@@ -5,7 +5,4 @@
  * @param value «начение узла.
  * @param next ”казатель на следующий узел (по умолчанию nullptr).
  */
-Node::Node(size_t value, Node* next) {
-	element = value;
-	pNext = next;
-}
+Node::Node(size_t value, Node* next) : element(value), pNext(next) {}

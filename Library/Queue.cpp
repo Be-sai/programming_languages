@@ -5,11 +5,7 @@
 /**
  * @brief Конструктор по умолчанию.
  */
-Queue::Queue()
-{
-    front = nullptr;
-    rear = nullptr;
-}
+Queue::Queue() : front(nullptr), rear(nullptr) {}
 
 /**
  * @brief Конструктор копирования.
@@ -25,13 +21,18 @@ Queue::Queue(const Queue& other)
     }
 }
 
+Queue::Queue(Queue&& other) noexcept : front(other.front), rear(other.rear)
+{
+    other.front = nullptr;
+    other.rear = nullptr;
+}
+
 /**
  * @brief Конструктор с использованием списка инициализации.
  * @param list Список инициализации.
  */
-Queue::Queue(std::initializer_list<size_t> list) {
-    front = nullptr;
-    rear = nullptr;
+Queue::Queue(std::initializer_list<size_t> list) : front(nullptr), rear(nullptr) 
+{
     for (const auto& temp : list) {
         enqueue(temp);
     }
@@ -91,7 +92,7 @@ void Queue::dequeue()
 int Queue::peek()
 {
     if (front != nullptr) {
-        front->element;
+        return front->element;
     }
     else {
         throw std::runtime_error("Queue is empty");
@@ -133,6 +134,19 @@ const Queue& Queue::operator=(const Queue& other)
 {
     if (this != &other)
     {
+        Queue temp(other);
+
+        std::swap(this->front, temp.front);
+        std::swap(this->rear, temp.rear);
+    }
+
+    return *this;
+}
+
+Queue& Queue::operator=(Queue&& other) noexcept
+{
+    if (this != &other)
+    {
         Node* temp = front;
         while (temp != nullptr)
         {
@@ -141,12 +155,11 @@ const Queue& Queue::operator=(const Queue& other)
             temp = front;
         }
 
-        temp = other.front;
-        while (temp != nullptr)
-        {
-            enqueue(temp->element);
-            temp = temp->pNext;
-        }
+        front = other.front;
+        rear = other.rear;
+
+        other.front = nullptr;
+        other.rear = nullptr;
     }
 
     return *this;
