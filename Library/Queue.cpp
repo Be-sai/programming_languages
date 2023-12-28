@@ -5,7 +5,7 @@
 
 Queue::Queue() : front(nullptr), rear(nullptr) {}
 
-Queue::Queue(const Queue& other)
+Queue::Queue(const Queue& other) : Queue()
 {
     Node* temp = other.front;
     while (temp != nullptr)
