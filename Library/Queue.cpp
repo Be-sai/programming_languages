@@ -2,15 +2,9 @@
 #include "Queue.h"
 #include <iostream>
 
-/**
- * @brief Конструктор по умолчанию.
- */
+
 Queue::Queue() : front(nullptr), rear(nullptr) {}
 
-/**
- * @brief Конструктор копирования.
- * @param other Другой объект очереди.
- */
 Queue::Queue(const Queue& other)
 {
     Node* temp = other.front;
@@ -27,10 +21,6 @@ Queue::Queue(Queue&& other) noexcept : front(other.front), rear(other.rear)
     other.rear = nullptr;
 }
 
-/**
- * @brief Конструктор с использованием списка инициализации.
- * @param list Список инициализации.
- */
 Queue::Queue(std::initializer_list<size_t> list) : front(nullptr), rear(nullptr) 
 {
     for (const auto& temp : list) {
@@ -38,9 +28,6 @@ Queue::Queue(std::initializer_list<size_t> list) : front(nullptr), rear(nullptr)
     }
 }
 
-/**
- * @brief Деструктор.
- */
 Queue::~Queue()
 {
     Node* temp = front;
@@ -52,10 +39,6 @@ Queue::~Queue()
     }
 }
 
-/**
- * @brief Добавление элемента в конец очереди.
- * @param item Элемент для добавления.
- */
 void Queue::enqueue(size_t item)
 {
     Node* temp = new Node(item);
@@ -72,9 +55,6 @@ void Queue::enqueue(size_t item)
     }
 }
 
-/**
- * @brief Удаление элемента из начала очереди.
- */
 void Queue::dequeue()
 {
     if (front != nullptr)
@@ -85,28 +65,20 @@ void Queue::dequeue()
     }
 }
 
-/**
- * @brief Получение значения первого элемента очереди.
- * @return Значение первого элемента очереди.
- */
-int Queue::peek()
+size_t Queue::peek()
 {
-    if (front != nullptr) {
-        return front->element;
+    if (front == nullptr) {
+        throw std::runtime_error("Queue is empty");
     }
     else {
-        throw std::runtime_error("Queue is empty");
+        return front->element;
     }
 
 }
 
-/**
- * @brief Получение размера очереди.
- * @return Размер очереди.
- */
-int Queue::size()
+size_t Queue::size()
 {
-    int i = 0;
+    size_t i = 0;
     Node* temp = front;
     while (temp != nullptr){
         temp = temp->pNext;
@@ -116,20 +88,11 @@ int Queue::size()
 
 }
 
-/**
- * @brief Проверка, пуста ли очередь.
- * @return true, если очередь пуста, иначе false.
- */
 bool Queue::isEmpty() {
 
     return rear == nullptr && front == nullptr;
 }
 
-/**
- * @brief Оператор присваивания.
- * @param other Другой объект очереди.
- * @return Ссылка на текущий объект.
- */
 const Queue& Queue::operator=(const Queue& other)
 {
     if (this != &other)
@@ -165,11 +128,6 @@ Queue& Queue::operator=(Queue&& other) noexcept
     return *this;
 }
 
-/**
- * @brief Оператор вывода в поток.
- * @param os Поток вывода.
- * @return Ссылка на поток вывода.
- */
 std::ostream& Queue::operator<<(std::ostream& os) {
     Node* temp = front;
     while (temp != nullptr)
@@ -180,11 +138,6 @@ std::ostream& Queue::operator<<(std::ostream& os) {
     return os;
 }
 
-/**
- * @brief Оператор ввода из потока.
- * @param is Поток ввода.
- * @return Ссылка на поток ввода.
- */
 std::istream& Queue::operator>>(std::istream& is) {
     size_t value;
     while (is >> value)
